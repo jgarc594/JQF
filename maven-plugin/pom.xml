@@ -48,6 +48,22 @@
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.5.1</version>
             </plugin>
+            <plugin>
+                <groupId>edu.berkeley.cs.jqf</groupId>
+                <artifactId>jqf-maven-plugin</artifactId>
+                <version>2.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>fuzz</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Specify the test method to be fuzzed-->
+                    <testMethod>testSimpleTest</testMethod>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
