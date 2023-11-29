@@ -37,6 +37,7 @@ import edu.berkeley.cs.jqf.fuzz.guidance.Guidance;
 import edu.berkeley.cs.jqf.fuzz.guidance.GuidanceException;
 import edu.berkeley.cs.jqf.fuzz.guidance.Result;
 import edu.berkeley.cs.jqf.fuzz.util.Coverage;
+import edu.berkeley.cs.jqf.instrument.tracing.events.BranchEvent;
 import edu.berkeley.cs.jqf.instrument.tracing.events.TraceEvent;
 
 /**
@@ -136,10 +137,19 @@ public class NoGuidance implements Guidance {
      * @param thread the thread whose events to handle
      * @return a callback that does nothing.
      */
-    @Override
-    public Consumer<TraceEvent> generateCallBack(Thread thread) {
-        return getCoverage()::handleEvent;
-    }
+@Override
+public Consumer<TraceEvent> generateCallBack(Thread thread) {
+    return event -> {
+        if (event instanceof BranchEvent) {
+            BranchEvent branchEvent = (BranchEvent) event;
+            int eventId = branchEvent.getIid();
+            int branchArm = branchEvent.getArm();
+            System.out.println("Event ID: " + eventId + ", Branch Arm: " + branchArm);
+        }
+
+        getCoverage().handleEvent(event);
+    };
+}
 
     /**
      * Returns a reference to the coverage statistics.
