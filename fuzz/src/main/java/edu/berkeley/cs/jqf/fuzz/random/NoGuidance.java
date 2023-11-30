@@ -81,7 +81,7 @@ public class NoGuidance implements Guidance {
      */
     @Override
     public InputStream getInput() {
-        return Guidance.createInputStream(() -> random.nextInt(256));
+    return Guidance.createInputStream(() -> 200);
     }
 
     /**
@@ -139,15 +139,17 @@ public class NoGuidance implements Guidance {
      */
 @Override
 public Consumer<TraceEvent> generateCallBack(Thread thread) {
+    String threadName = thread.getName();
     return event -> {
         if (event instanceof BranchEvent) {
             BranchEvent branchEvent = (BranchEvent) event;
             int eventId = branchEvent.getIid();
             int branchArm = branchEvent.getArm();
-            System.out.println("Event ID: " + eventId + ", Branch Arm: " + branchArm);
+            System.out.println("Thread " + threadName + " produced an event: Event ID: " + eventId + ", Branch Arm: " + branchArm);
+        } else {
+            int eventId = event.getIid();
+            System.out.println("Thread " + threadName + " produced an event: Event ID: " + eventId);
         }
-
-        getCoverage().handleEvent(event);
     };
 }
 
