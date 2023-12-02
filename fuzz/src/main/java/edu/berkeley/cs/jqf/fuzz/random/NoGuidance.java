@@ -145,10 +145,10 @@ public Consumer<TraceEvent> generateCallBack(Thread thread) {
             BranchEvent branchEvent = (BranchEvent) event;
             int eventId = branchEvent.getIid();
             int branchArm = branchEvent.getArm();
-            System.out.println("Thread " + threadName + " produced an event: Event ID: " + eventId + ", Branch Arm: " + branchArm);
+            System.out.println("Thread " + threadName + " produced an event: Event ID: " + eventId + ", Branch Arm: " + branchArm+ " evevnt: " + event);
         } else {
             int eventId = event.getIid();
-            System.out.println("Thread " + threadName + " produced an event: Event ID: " + eventId);
+            System.out.println("Thread " + threadName + " produced an event: Event ID: " + eventId + "evevnt: " + event);
         }
     };
 }
